@@ -1,7 +1,7 @@
 {
-  "name": "xlr-mute-sync",
+  "name": "elgato-wave-mute-sync",
   "version": "0.0.1",
-  "description": "Elgato Wave XLR mute status sync",
+  "description": "Elgato Wave:1/Wave:3/Wave XLR mute status sync",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
