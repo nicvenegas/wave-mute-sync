@@ -84,22 +84,6 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
   ): void {
     switch (method) {
       case "microphoneSettingsChanged":
-        this.rpc.addMethod(method, (payload) => {
-          if (!isValidNotificationPayload(method, payload)) {
-            throw new Error(`Payload for method ${method} type mismatch`);
-          }
-
-          // TODO Unsure why this cast is required:
-          //
-          // typeof payload is inferred as M extends "microphoneSettingsChanged"
-          //   ? MicrophoneSettingsPayload
-          //   : MicrophoneStatePayload
-          const p = payload as MicrophoneSettingsPayload;
-          if (!this.isDuplicatedMicrophoneSettingsNotification(p)) {
-            fn(payload);
-          }
-        });
-        return;
       case "microphoneStateChanged":
         this.rpc.addMethod(method, (payload) => {
           if (!isValidNotificationPayload(method, payload)) {
@@ -112,31 +96,5 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
       default:
         const assertExhaustive: never = method;
     }
-  }
-
-  /**
-   * WaveLink sends 4× microphoneSettingsChanged notifications whenever
-   * - Mute is toggled
-   * - The dial is turned
-   * - The dial button is pressed to jump between gain/volume/balance
-   */
-  private isDuplicatedMicrophoneSettingsNotification(
-    payload: MicrophoneSettingsPayload
-  ): boolean {
-    const nowMs = Date.now();
-    const timeSinceLastPayloadMs =
-      nowMs - this.lastMicrophoneSettingsNotificationMs;
-
-    if (
-      this.previousMicrophoneSettingsNotification &&
-      isEqual(this.previousMicrophoneSettingsNotification, payload) &&
-      timeSinceLastPayloadMs < 100
-    ) {
-      return true;
-    }
-
-    this.previousMicrophoneSettingsNotification = { ...payload };
-    this.lastMicrophoneSettingsNotificationMs = nowMs;
-    return false;
   }
 }

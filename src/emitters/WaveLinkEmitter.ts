@@ -6,6 +6,7 @@ import { isEqual, MicrophoneSettingsPayload, WaveLinkRPC } from "./WaveLinkRPC";
 export class WaveLinkEmitter implements MicrophoneStatusEmitter {
   private readonly eventEmitter = new EventEmitter();
   private previousMicrophoneSettings: MicrophoneSettingsPayload | undefined;
+  private lastMicrophoneSettingsNotificationMs: number = Date.now();
 
   /** Assumes we start the application with the microphone unmuted */
   private isMuted: boolean = false;
@@ -31,6 +32,10 @@ export class WaveLinkEmitter implements MicrophoneStatusEmitter {
     this.waveLinkRPC.onNotification(
       "microphoneSettingsChanged",
       (microphoneSettings) => {
+        if (this.isDuplicateNotification(microphoneSettings)) {
+          return;
+        }
+
         const areSettingsUnchanged =
           this.previousMicrophoneSettings &&
           isEqual(this.previousMicrophoneSettings, microphoneSettings);
@@ -50,6 +55,32 @@ export class WaveLinkEmitter implements MicrophoneStatusEmitter {
         }
       }
     );
+  }
+
+  /**
+   * WaveLink sends 4× microphoneSettingsChanged notifications whenever
+   * - Mute is toggled
+   * - The dial is turned
+   * - The dial button is pressed to jump between gain/volume/balance
+   */
+  private isDuplicateNotification(
+    microphoneSettings: MicrophoneSettingsPayload
+  ): boolean {
+    const nowMs = Date.now();
+    const timeSinceLastPayloadMs =
+      nowMs - this.lastMicrophoneSettingsNotificationMs;
+
+    if (
+      this.previousMicrophoneSettings &&
+      isEqual(this.previousMicrophoneSettings, microphoneSettings) &&
+      timeSinceLastPayloadMs < 100
+    ) {
+      return true;
+    }
+
+    this.previousMicrophoneSettings = { ...microphoneSettings };
+    this.lastMicrophoneSettingsNotificationMs = nowMs;
+    return false;
   }
 
   on<N extends keyof Events>(
