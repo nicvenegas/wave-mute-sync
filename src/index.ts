@@ -6,7 +6,7 @@ import { WaveLinkRPC } from "./emitters/WaveLinkRPC";
 
 (async () => {
   console.log("Connecting to WaveLink…");
-  const waveLinkRPC: WaveLinkRPC = new WaveLinkWebSocketRPC();
+  const waveLinkRPC = new WaveLinkWebSocketRPC();
   await waveLinkRPC.connect();
   console.log("Connected!");
 
