@@ -6,6 +6,7 @@ import {
 import WebSocket from "ws";
 import {
   isEqual,
+  isMicrophoneSettingsPayload,
   isValidNotificationPayload,
   isValidResponsePayload,
   MicrophoneSettingsPayload,
@@ -69,6 +70,7 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
         if (!isValidResponsePayload(method, payload)) {
           throw new Error(`Payload for method ${method} type mismatch`);
         }
+
         return payload;
       default:
         const assertExhaustive: never = method;
@@ -86,11 +88,14 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
           if (!isValidNotificationPayload(method, payload)) {
             throw new Error(`Payload for method ${method} type mismatch`);
           }
-          if (
-            !this.isDuplicatedMicrophoneSettingsNotification(
-              payload as MicrophoneSettingsPayload
-            )
-          ) {
+
+          // TODO Unsure why this cast is required:
+          //
+          // typeof payload is inferred as M extends "microphoneSettingsChanged"
+          //   ? MicrophoneSettingsPayload
+          //   : MicrophoneStatePayload
+          const p = payload as MicrophoneSettingsPayload;
+          if (!this.isDuplicatedMicrophoneSettingsNotification(p)) {
             fn(payload);
           }
         });
@@ -100,6 +105,7 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
           if (!isValidNotificationPayload(method, payload)) {
             throw new Error(`Payload for method ${method} type mismatch`);
           }
+
           fn(payload);
         });
         return;

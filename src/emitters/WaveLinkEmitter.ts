@@ -31,10 +31,10 @@ export class WaveLinkEmitter implements MicrophoneStatusEmitter {
     this.waveLinkRPC.onNotification(
       "microphoneSettingsChanged",
       (microphoneSettings) => {
-        if (
+        const areSettingsUnchanged =
           this.previousMicrophoneSettings &&
-          isEqual(this.previousMicrophoneSettings, microphoneSettings)
-        ) {
+          isEqual(this.previousMicrophoneSettings, microphoneSettings);
+        if (areSettingsUnchanged) {
           this.isMuted = !this.isMuted;
           this.emit("data", this.isMuted ? "muted" : "unmuted");
         }
