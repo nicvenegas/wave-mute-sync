@@ -2,10 +2,11 @@ import { exec } from "child_process";
 import { MicrophoneStatusEmitter } from "./interactor";
 import { WaveLinkEmitter } from "./emitters/WaveLinkEmitter";
 import { WaveLinkWebSocketRPC } from "./emitters/WaveLinkWebSocketRPC";
+import { WaveLinkRPC } from "./emitters/WaveLinkRPC";
 
 (async () => {
   console.log("Connecting to WaveLink…");
-  const waveLinkRPC = new WaveLinkWebSocketRPC();
+  const waveLinkRPC: WaveLinkRPC = new WaveLinkWebSocketRPC();
   await waveLinkRPC.connect();
   console.log("Connected!");
 

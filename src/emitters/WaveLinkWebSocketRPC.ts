@@ -17,14 +17,18 @@ import {
 } from "./WaveLinkRPC";
 
 export class WaveLinkWebSocketRPC implements WaveLinkRPC {
-  private readonly webSocket: WebSocket;
-  private connectionPromise: Promise<void>;
+  private webSocket: WebSocket | undefined;
+  private connectionPromiseResolve = () => {};
+  private connectionPromise: Promise<void> = new Promise((resolve) => {
+    this.connectionPromiseResolve = resolve;
+  });
 
   private readonly rpc = new JSONRPCServerAndClient(
     new JSONRPCServer(),
-    new JSONRPCClient((request) => {
+    new JSONRPCClient(async (request) => {
       try {
-        this.webSocket.send(JSON.stringify(request));
+        await this.connectionPromise;
+        this.webSocket!.send(JSON.stringify(request));
         return Promise.resolve();
       } catch (error) {
         return Promise.reject(error);
@@ -37,8 +41,10 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
     | undefined;
   private lastMicrophoneSettingsNotificationMs: number = Date.now();
 
-  constructor(url = "ws://127.0.0.1:1824") {
-    this.webSocket = new WebSocket(url);
+  constructor(private readonly webSocketURL = "ws://127.0.0.1:1824") {}
+
+  connect(): Promise<void> {
+    this.webSocket = new WebSocket(this.webSocketURL);
     this.webSocket.onmessage = (event) => {
       this.rpc.receiveAndSend(JSON.parse(event.data.toString()));
     };
@@ -47,15 +53,9 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
         `Connection is closed (${event.reason}).`
       );
     };
-
-    this.connectionPromise = new Promise((resolve) => {
-      this.webSocket.onopen = () => {
-        resolve();
-      };
-    });
-  }
-
-  connect(): Promise<void> {
+    this.webSocket.onopen = () => {
+      this.connectionPromiseResolve();
+    };
     return this.connectionPromise;
   }
 

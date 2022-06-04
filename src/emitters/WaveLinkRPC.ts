@@ -101,6 +101,7 @@ export function isValidNotificationPayload<M extends NotificationMethods>(
 }
 
 export interface WaveLinkRPC {
+  connect(): Promise<void>;
   request<M extends RequestMethods>(method: M): Promise<ResponsePayload<M>>;
   onNotification<M extends NotificationMethods>(
     method: M,
