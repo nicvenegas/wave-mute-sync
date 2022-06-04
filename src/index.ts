@@ -18,7 +18,7 @@ import { MicrophoneStatus } from "./domain";
   micStatus.on("data", (status: MicrophoneStatus) => {
     if (status === "muted" || status === "unmuted") {
       console.log(`Microphone is ${status}`);
-      const script = `Elgato Wave ${status}`;
+      const script = `Elgato Wave Mute Sync ${status}`;
       exec(
         `osascript -e 'tell application "Keyboard Maestro Engine" to do script "${script}"'`
       );
