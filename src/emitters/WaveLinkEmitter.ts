@@ -16,6 +16,7 @@ export class WaveLinkEmitter implements MicrophoneStatusEmitter {
   }
 
   private async init(): Promise<void> {
+    await this.waveLinkRPC.connect();
     const { isMicrophoneConnected } = await this.waveLinkRPC.request(
       "getMicrophoneState"
     );
