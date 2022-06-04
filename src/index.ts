@@ -10,7 +10,10 @@ import { MicrophoneStatus } from "./domain";
   await waveLinkRPC.connect();
   console.log("Connected!");
 
-  const micStatus: MicrophoneStatusEmitter = new WaveLinkEmitter(waveLinkRPC);
+  const micStatus: MicrophoneStatusEmitter = new WaveLinkEmitter(
+    waveLinkRPC,
+    process.argv[2] === "--muted"
+  );
 
   micStatus.on("data", (status: MicrophoneStatus) => {
     if (status === "muted" || status === "unmuted") {

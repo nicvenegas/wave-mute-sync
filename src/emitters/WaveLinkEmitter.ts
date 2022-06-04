@@ -8,10 +8,10 @@ export class WaveLinkEmitter implements MicrophoneStatusEmitter {
   private previousMicrophoneSettings: MicrophoneSettingsPayload | undefined;
   private lastMicrophoneSettingsNotificationMs: number = Date.now();
 
-  /** Assumes we start the application with the microphone unmuted */
-  private isMuted: boolean = false;
-
-  constructor(private readonly waveLinkRPC: WaveLinkRPC) {
+  constructor(
+    private readonly waveLinkRPC: WaveLinkRPC,
+    private isMuted = false
+  ) {
     this.init();
   }
 
