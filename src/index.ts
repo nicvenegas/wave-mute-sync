@@ -1,18 +1,35 @@
 import { exec } from "child_process";
 import { MicrophoneStatusEmitter } from "./interactor";
-import { WaveLinkEmitter } from "./emitters/WaveLinkGateway";
+import { WaveLinkEmitter } from "./emitters/WaveLinkEmitter";
+import { WaveLinkWebSocketRPC } from "./emitters/WaveLinkWebSocketRPC";
 
-const micStatus: MicrophoneStatusEmitter = new WaveLinkEmitter();
+(async () => {
+  console.log("Connecting to WaveLink…");
+  const waveLinkRPC = new WaveLinkWebSocketRPC();
+  await waveLinkRPC.connect();
+  console.log("Connected!");
 
-micStatus.on("data", (status) => {
-  if (status === "muted" || status === "unmuted") {
-    const script = `${status === "muted" ? "Mute" : "Unmute"} calls`;
-    exec(
-      `osascript -e 'tell application "Keyboard Maestro Engine" to do script "${script}"'`
-    );
-  }
-});
+  const micStatus: MicrophoneStatusEmitter = new WaveLinkEmitter(waveLinkRPC);
 
-micStatus.on("error", (e) => {
-  // TODO Error handling
-});
+  micStatus.on("data", (status) => {
+    if (status === "muted" || status === "unmuted") {
+      console.log(`Microphone is ${status}`);
+      const script = `Elgato Wave ${status}`;
+      exec(
+        `osascript -e 'tell application "Keyboard Maestro Engine" to do script "${script}"'`
+      );
+      return;
+    }
+
+    if (status === "disconnected") {
+      console.log("Microphone is disconnected");
+      return;
+    }
+
+    const assertExhaustive: never = status;
+  });
+
+  micStatus.on("error", (e) => {
+    // TODO Error handling
+  });
+})();
