@@ -64,19 +64,13 @@ export function isValidResponsePayload<M extends RequestMethods>(
 ): payload is ResponsePayload<M> {
   switch (method) {
     case "getMicrophoneSettings":
-      if (isMicrophoneSettingsPayload(payload)) {
-        return true;
-      }
-      break;
+      return isMicrophoneSettingsPayload(payload);
     case "getMicrophoneState":
-      if (isMicrophoneStatePayload(payload)) {
-        return true;
-      }
-      break;
+      return isMicrophoneStatePayload(payload);
     default:
       const assertExhaustive: never = method;
+      return false;
   }
-  return false;
 }
 
 export function isValidNotificationPayload<M extends NotificationMethods>(
@@ -85,19 +79,13 @@ export function isValidNotificationPayload<M extends NotificationMethods>(
 ): payload is NotificatonPayload<M> {
   switch (method) {
     case "microphoneSettingsChanged":
-      if (isMicrophoneSettingsPayload(payload)) {
-        return true;
-      }
-      break;
+      return isMicrophoneSettingsPayload(payload);
     case "microphoneStateChanged":
-      if (isMicrophoneStatePayload(payload)) {
-        return true;
-      }
-      break;
+      return isMicrophoneStatePayload(payload);
     default:
       const assertExhaustive: never = method;
+      return false;
   }
-  return false;
 }
 
 export interface WaveLinkRPC {

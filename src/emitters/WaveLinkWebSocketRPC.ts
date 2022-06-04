@@ -70,7 +70,6 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
         if (!isValidResponsePayload(method, payload)) {
           throw new Error(`Payload for method ${method} type mismatch`);
         }
-
         return payload;
       default:
         const assertExhaustive: never = method;
@@ -89,7 +88,6 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
           if (!isValidNotificationPayload(method, payload)) {
             throw new Error(`Payload for method ${method} type mismatch`);
           }
-
           fn(payload);
         });
         return;
