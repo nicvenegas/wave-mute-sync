@@ -2,7 +2,7 @@ import { exec } from "child_process";
 import { MicrophoneStatusEmitter } from "./interactor";
 import { WaveLinkEmitter } from "./emitters/WaveLinkEmitter";
 import { WaveLinkWebSocketRPC } from "./emitters/WaveLinkWebSocketRPC";
-import { WaveLinkRPC } from "./emitters/WaveLinkRPC";
+import { MicrophoneStatus } from "./domain";
 
 (async () => {
   console.log("Connecting to WaveLink…");
@@ -12,7 +12,7 @@ import { WaveLinkRPC } from "./emitters/WaveLinkRPC";
 
   const micStatus: MicrophoneStatusEmitter = new WaveLinkEmitter(waveLinkRPC);
 
-  micStatus.on("data", (status) => {
+  micStatus.on("data", (status: MicrophoneStatus) => {
     if (status === "muted" || status === "unmuted") {
       console.log(`Microphone is ${status}`);
       const script = `Elgato Wave ${status}`;
@@ -30,7 +30,7 @@ import { WaveLinkRPC } from "./emitters/WaveLinkRPC";
     const assertExhaustive: never = status;
   });
 
-  micStatus.on("error", (e) => {
+  micStatus.on("error", (e: Error) => {
     // TODO Error handling
   });
 })();
