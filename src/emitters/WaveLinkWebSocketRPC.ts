@@ -5,8 +5,6 @@ import {
 } from "json-rpc-2.0";
 import WebSocket from "ws";
 import {
-  isEqual,
-  isMicrophoneSettingsPayload,
   isValidNotificationPayload,
   isValidResponsePayload,
   MicrophoneSettingsPayload,
@@ -63,10 +61,10 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
   async request<M extends RequestMethods>(
     method: M
   ): Promise<ResponsePayload<M>> {
-    const payload = await this.rpc.request(method);
     switch (method) {
       case "getMicrophoneSettings":
       case "getMicrophoneState":
+        const payload = await this.rpc.request(method);
         if (!isValidResponsePayload(method, payload)) {
           throw new Error(`Payload for method ${method} type mismatch`);
         }
