@@ -1,4 +1,4 @@
-# Elgato Wave Mute Sync
+# Wave Mute Sync
 
 Bidirectional sync between the Elgato Wave hardware mute button and the
 OS-level mute via a keyboard shortcut
