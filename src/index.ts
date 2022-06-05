@@ -1,14 +1,17 @@
 import { exec } from "child_process";
+import debug from "debug";
 import { MicrophoneStatusEmitter } from "./interactor";
 import { WaveLinkEmitter } from "./emitters/WaveLinkEmitter";
 import { WaveLinkWebSocketRPC } from "./emitters/WaveLinkWebSocketRPC";
 import { MicrophoneStatus } from "./domain";
 
+const log = debug("elgato-wave-mute-sync");
+
 (async () => {
-  console.log("Connecting to WaveLink…");
+  log("Connecting to WaveLink…");
   const waveLinkRPC = new WaveLinkWebSocketRPC();
   await waveLinkRPC.connect();
-  console.log("Connected!");
+  log("Connected!");
 
   const micStatus: MicrophoneStatusEmitter = new WaveLinkEmitter(
     waveLinkRPC,
@@ -17,7 +20,7 @@ import { MicrophoneStatus } from "./domain";
 
   micStatus.on("data", (status: MicrophoneStatus) => {
     if (status === "muted" || status === "unmuted") {
-      console.log(`Microphone is ${status}`);
+      log(`Microphone is ${status}`);
 
       const macro = "Elgato Wave Mute Sync";
       const appleScript = `tell application "Keyboard Maestro Engine" to do script "${macro}" with parameter "${status}"`;
@@ -26,7 +29,7 @@ import { MicrophoneStatus } from "./domain";
     }
 
     if (status === "disconnected") {
-      console.log("Microphone is disconnected");
+      log("Microphone is disconnected");
       return;
     }
 
