@@ -5,7 +5,7 @@ import { WaveLinkEmitter } from "./emitters/WaveLinkEmitter";
 import { WaveLinkWebSocketRPC } from "./emitters/WaveLinkWebSocketRPC";
 import { MicrophoneStatus } from "./domain";
 
-const log = debug("elgato-wave-mute-sync");
+const log = debug("wave-mute-sync");
 
 (async () => {
   log("Connecting to WaveLink…");
@@ -22,7 +22,7 @@ const log = debug("elgato-wave-mute-sync");
     if (status === "muted" || status === "unmuted") {
       log(`Microphone is ${status}`);
 
-      const macro = "Elgato Wave Mute Sync";
+      const macro = "Wave Mute Sync";
       const appleScript = `tell application "Keyboard Maestro Engine" to do script "${macro}" with parameter "${status}"`;
       exec(`osascript -e '${appleScript}'`);
       return;

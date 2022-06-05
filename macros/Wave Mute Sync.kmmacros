@@ -214,7 +214,7 @@
 			</dict>
 		</array>
 		<key>Name</key>
-		<string>Elgato Wave Mute Sync</string>
+		<string>Wave Mute Sync</string>
 		<key>ToggleMacroUID</key>
 		<string>A08286A2-DCAE-408A-BEC6-7468F9FAFEA2</string>
 		<key>UID</key>
@@ -288,7 +288,7 @@
 									<key>VariableConditionType</key>
 									<string>Is</string>
 									<key>VariableValue</key>
-									<string>Elgato Wave Mute Sync</string>
+									<string>Wave Mute Sync</string>
 								</dict>
 							</array>
 							<key>ConditionListMatch</key>
@@ -561,7 +561,7 @@
 				<key>CustomIconData</key>
 				<string>KMEC=Rounded=KMCOLOR:252,102,102,0=🎤=86=0=8=1=KMCOLOR:0,0,0,255</string>
 				<key>ModificationDate</key>
-				<real>676089110.95074701</real>
+				<real>676121703.71411598</real>
 				<key>Name</key>
 				<string>Toggle input volume</string>
 				<key>Triggers</key>
@@ -582,7 +582,7 @@
 			</dict>
 		</array>
 		<key>Name</key>
-		<string>Elgato Wave Mute Sync</string>
+		<string>Wave Mute Sync</string>
 		<key>ToggleMacroUID</key>
 		<string>A08286A2-DCAE-408A-BEC6-7468F9FAFEA2</string>
 		<key>UID</key>
@@ -687,7 +687,7 @@
 												<key>MacroActionType</key>
 												<string>SetVariableToText</string>
 												<key>Text</key>
-												<string>Elgato Wave Mute Sync</string>
+												<string>Wave Mute Sync</string>
 												<key>Variable</key>
 												<string>LastUnmutedBy</string>
 											</dict>
@@ -783,12 +783,10 @@
 								<key>ElseActions</key>
 								<array>
 									<dict>
-										<key>IsDisclosed</key>
-										<false/>
 										<key>MacroActionType</key>
 										<string>SetVariableToText</string>
 										<key>Text</key>
-										<string>Elgato Wave Mute Sync</string>
+										<string>Wave Mute Sync</string>
 										<key>Variable</key>
 										<string>LastMutedBy</string>
 									</dict>
@@ -901,9 +899,9 @@
 				<key>CustomIconData</key>
 				<string>KMEP-GenericApplication-/Applications/WaveLink.app</string>
 				<key>ModificationDate</key>
-				<real>676096127.41442394</real>
+				<real>676121560.84943998</real>
 				<key>Name</key>
-				<string>Elgato Wave Mute Sync</string>
+				<string>Wave Mute Sync</string>
 				<key>Triggers</key>
 				<array/>
 				<key>UID</key>
@@ -911,7 +909,7 @@
 			</dict>
 		</array>
 		<key>Name</key>
-		<string>Elgato Wave Mute Sync</string>
+		<string>Wave Mute Sync</string>
 		<key>ToggleMacroUID</key>
 		<string>A08286A2-DCAE-408A-BEC6-7468F9FAFEA2</string>
 		<key>UID</key>

@@ -1,5 +1,5 @@
 {
-  "name": "elgato-wave-mute-sync",
+  "name": "wave-mute-sync",
   "version": "0.0.1",
   "private": true,
   "description": "Elgato Wave:1/Wave:3/Wave XLR mute status sync",
