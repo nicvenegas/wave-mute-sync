@@ -1,7 +1,7 @@
 # Elgato Wave Mute Sync
 
 Bidirectional sync between the Elgato Wave hardware mute button and the
-OS-level mute, including keeping Zoom's mute status in sync
+OS-level mute via a keyboard shortcut
 
 ## Installation
 
@@ -9,6 +9,7 @@ Requirements
 
 - Elgato [Wave Link](https://www.elgato.com/en/downloads)
 - [Keyboard Maestro](https://www.keyboardmaestro.com/)
+  - Import the macros in the `macros` directory
 - Zoom (optional)
   - Ensure the _Mute/Unmute My Audio_ keyboard shortcut is set to its default
     (⇧⌘A) and is enabled globally
