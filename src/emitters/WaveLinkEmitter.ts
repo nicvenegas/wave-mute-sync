@@ -5,6 +5,7 @@ import { isEqual, MicrophoneSettingsPayload, WaveLinkRPC } from "./WaveLinkRPC";
 
 export class WaveLinkEmitter implements MicrophoneStatusEmitter {
   private readonly eventEmitter = new EventEmitter();
+
   private previousMicrophoneSettings: MicrophoneSettingsPayload | undefined;
   private lastMicrophoneSettingsNotificationMs: number = Date.now();
 

@@ -29,6 +29,9 @@ const log = debug("elgato-wave-mute-sync");
     }
 
     if (status === "disconnected") {
+      // TODO This event is emitted prior to binding the handler
+      // console.log("Ensure the Elgato Wave microphone is connected");
+      // process.exit(1);
       log("Microphone is disconnected");
       return;
     }
