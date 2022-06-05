@@ -1,7 +1,7 @@
 # Wave Mute Sync
 
-Bidirectional sync between the Elgato Wave hardware mute button and the
-OS-level mute via a keyboard shortcut
+Bidirectional sync between the Elgato Wave hardware mute button and OS-level
+mute (via a keyboard shortcut)
 
 ## Installation
 
@@ -41,15 +41,15 @@ mute and they'll stay in sync (and keep Zoom in sync, too)
 ### Elgato Wave and Wave Link
 
 Many actions that manipulate the Wave hardware are indistinguishable from
-legitimately toggling the hardware mute button. This includes
+legitimately toggling the hardware mute button, e.g.,
 
-- Pressing the dial button to cycle between gain and monitoring volume/balance
-- Updating settings in the Wave Link application, e.g., Low impedance mode,
-  Show clipguard indicator, and Wave gain lock
+- Pressing the dial button to cycle between gain/monitoring volume/monitoring
+  balance adjustment
+- Updating some settings in the Wave Link application, e.g., Wave gain lock
 - Saving settings to hardware in the Wave Link application
 
 As a workaround, you can ⌃C the `ts-node` process and restart it to match
-the actual mute status by optionally passing the `--muted` flag
+the actual hardware mute status by optionally passing the `--muted` flag
 
 ### Zoom
 
