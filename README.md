@@ -59,3 +59,14 @@ remain unmuted
 
 Simply toggle mute via ⌃⇧⌘A or the hardware mute button a couple of times to
 put everything back in sync
+
+## Credits
+
+Thanks to
+
+- Stephen Millard ([@techflare][1]) — [Mute Your Microphone with Keyboard Maestro][2]
+  (2018)
+- Matt Aitchison — https://github.com/mattatcha/touchportal_elgato-wave (2020)
+
+[1]: https://twitter.com/techflare
+[2]: https://www.thoughtasylum.com/2018/02/04/Mute-Your-Microphone-with-Keyboard-Maestro/
