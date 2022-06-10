@@ -5,7 +5,9 @@
   "description": "Elgato Wave:1/Wave:3/Wave XLR mute status sync",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit --watch"
   },
   "author": "Nicolas Venegas <@nicvenegas>",
   "license": "Unlicense",
