@@ -13,23 +13,6 @@ export class WaveLinkEmitter implements MicrophoneStatusEmitter {
     private readonly waveLinkRPC: WaveLinkRPC,
     private isMuted = false
   ) {
-    this.init();
-  }
-
-  private async init(): Promise<void> {
-    const { isMicrophoneConnected } = await this.waveLinkRPC.request(
-      "getMicrophoneState"
-    );
-    if (isMicrophoneConnected) {
-      const microphoneSettings = await this.waveLinkRPC.request(
-        "getMicrophoneSettings"
-      );
-      this.previousMicrophoneSettings = { ...microphoneSettings };
-      this.emit("data", this.isMuted ? "muted" : "unmuted");
-    } else {
-      this.emit("data", "disconnected");
-    }
-
     this.waveLinkRPC.onNotification(
       "microphoneSettingsChanged",
       (microphoneSettings) => {
@@ -56,6 +39,22 @@ export class WaveLinkEmitter implements MicrophoneStatusEmitter {
         }
       }
     );
+  }
+
+  async connect(): Promise<void> {
+    await this.waveLinkRPC.connect();
+    const { isMicrophoneConnected } = await this.waveLinkRPC.request(
+      "getMicrophoneState"
+    );
+    if (isMicrophoneConnected) {
+      const microphoneSettings = await this.waveLinkRPC.request(
+        "getMicrophoneSettings"
+      );
+      this.previousMicrophoneSettings = { ...microphoneSettings };
+      this.emit("data", this.isMuted ? "muted" : "unmuted");
+    } else {
+      this.emit("data", "disconnected");
+    }
   }
 
   /**

@@ -6,4 +6,6 @@ export interface Events {
   error: Error;
 }
 
-export type MicrophoneStatusEmitter = Emitter<Events>;
+export interface MicrophoneStatusEmitter extends Emitter<Events> {
+  connect(): Promise<void>;
+}
