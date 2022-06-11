@@ -47,7 +47,9 @@ export type RequestMethods = "getMicrophoneSettings" | "getMicrophoneState";
 export type ResponsePayload<M extends RequestMethods> =
   M extends "getMicrophoneSettings"
     ? MicrophoneSettingsPayload
-    : MicrophoneStatePayload;
+    : M extends "getMicrophoneState"
+    ? MicrophoneStatePayload
+    : never;
 
 export type NotificationMethods =
   | "microphoneSettingsChanged"
@@ -56,7 +58,9 @@ export type NotificationMethods =
 export type NotificatonPayload<M extends NotificationMethods> =
   M extends "microphoneSettingsChanged"
     ? MicrophoneSettingsPayload
-    : MicrophoneStatePayload;
+    : M extends "microphoneStateChanged"
+    ? MicrophoneStatePayload
+    : never;
 
 export function isValidResponsePayload<M extends RequestMethods>(
   method: M,
