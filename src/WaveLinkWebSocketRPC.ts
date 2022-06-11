@@ -1,11 +1,11 @@
 import debug from "debug";
-
 import {
   JSONRPCClient,
   JSONRPCServer,
   JSONRPCServerAndClient,
 } from "json-rpc-2.0";
 import WebSocket from "ws";
+
 import {
   isValidNotificationPayload,
   isValidResponsePayload,

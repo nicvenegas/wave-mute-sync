@@ -1,9 +1,19 @@
-import { EventEmitter } from "events";
+import EventEmitter from "events";
 
-import { Events, MicrophoneStatusEmitter } from "../interactor";
+import { MicrophoneStatus } from "./domain";
 import { isEqual, MicrophoneSettingsPayload, WaveLinkRPC } from "./WaveLinkRPC";
 
-export class WaveLinkEmitter implements MicrophoneStatusEmitter {
+export interface Emitter<T extends Record<string, any>> {
+  on<N extends keyof T>(eventName: N, fn: (param: T[N]) => void): void;
+  off<N extends keyof T>(eventName: N, fn: (param: T[N]) => void): void;
+}
+
+export interface Events {
+  data: MicrophoneStatus;
+  error: Error;
+}
+
+export class WaveLinkEmitter implements Emitter<Events> {
   private readonly eventEmitter = new EventEmitter();
 
   private previousMicrophoneSettings: MicrophoneSettingsPayload | undefined;

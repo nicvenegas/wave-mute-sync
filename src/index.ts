@@ -1,14 +1,13 @@
 import { exec } from "child_process";
 import debug from "debug";
 
-import { MicrophoneStatusEmitter } from "./interactor";
-import { WaveLinkEmitter } from "./emitters/WaveLinkEmitter";
-import { WaveLinkWebSocketRPC } from "./emitters/WaveLinkWebSocketRPC";
 import { MicrophoneStatus } from "./domain";
+import { WaveLinkEmitter } from "./WaveLinkEmitter";
+import { WaveLinkWebSocketRPC } from "./WaveLinkWebSocketRPC";
 
 const log = debug("wave-mute-sync");
 
-const micStatus: MicrophoneStatusEmitter = new WaveLinkEmitter(
+const micStatus = new WaveLinkEmitter(
   new WaveLinkWebSocketRPC(),
   process.argv[2] === "--muted"
 );
