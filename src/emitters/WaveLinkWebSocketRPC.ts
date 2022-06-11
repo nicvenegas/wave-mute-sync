@@ -1,3 +1,5 @@
+import debug from "debug";
+
 import {
   JSONRPCClient,
   JSONRPCServer,
@@ -14,6 +16,8 @@ import {
   ResponsePayload,
   WaveLinkRPC,
 } from "./WaveLinkRPC";
+
+const log = debug("wave-mute-sync:rpc");
 
 export class WaveLinkWebSocketRPC implements WaveLinkRPC {
   private webSocket: WebSocket | undefined;
@@ -43,6 +47,7 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
   constructor(private readonly webSocketURL = "ws://127.0.0.1:1824") {}
 
   connect(): Promise<void> {
+    log(`Connecting to WaveLink on ${this.webSocketURL}…`);
     this.webSocket = new WebSocket(this.webSocketURL);
     this.webSocket.onmessage = (event) => {
       this.rpc.receiveAndSend(JSON.parse(event.data.toString()));
@@ -53,6 +58,7 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
       );
     };
     this.webSocket.onopen = () => {
+      log("Connected!");
       this.connectionPromiseResolve();
     };
     return this.connectionPromise;
