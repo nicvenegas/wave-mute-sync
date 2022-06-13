@@ -13,11 +13,14 @@ export interface Events {
   error: Error;
 }
 
+export type Timestamped<T extends {}> = T & { receivedAtMs: number };
+
 export class WaveLinkEmitter implements Emitter<Events> {
   private readonly eventEmitter = new EventEmitter();
 
-  private previousMicrophoneSettings: MicrophoneSettingsPayload | undefined;
-  private lastMicrophoneSettingsNotificationMs: number = Date.now();
+  private previousMicrophoneSettings:
+    | Timestamped<MicrophoneSettingsPayload>
+    | undefined;
 
   constructor(
     private readonly waveLinkRPC: WaveLinkRPC,
@@ -26,7 +29,8 @@ export class WaveLinkEmitter implements Emitter<Events> {
     this.waveLinkRPC.onNotification(
       "microphoneSettingsChanged",
       (microphoneSettings) => {
-        if (this.isDuplicateNotification(microphoneSettings)) {
+        const receivedAtMs = Date.now();
+        if (this.isDuplicateNotification(microphoneSettings, receivedAtMs)) {
           return;
         }
 
@@ -37,7 +41,11 @@ export class WaveLinkEmitter implements Emitter<Events> {
           this.isMuted = !this.isMuted;
           this.emit("data", this.isMuted ? "muted" : "unmuted");
         }
-        this.previousMicrophoneSettings = { ...microphoneSettings };
+
+        this.previousMicrophoneSettings = {
+          ...microphoneSettings,
+          receivedAtMs,
+        };
       }
     );
 
@@ -60,7 +68,10 @@ export class WaveLinkEmitter implements Emitter<Events> {
       const microphoneSettings = await this.waveLinkRPC.request(
         "getMicrophoneSettings"
       );
-      this.previousMicrophoneSettings = { ...microphoneSettings };
+      this.previousMicrophoneSettings = {
+        ...microphoneSettings,
+        receivedAtMs: Date.now(),
+      };
       this.emit("data", this.isMuted ? "muted" : "unmuted");
     } else {
       this.emit("data", "disconnected");
@@ -74,23 +85,19 @@ export class WaveLinkEmitter implements Emitter<Events> {
    * - The dial button is pressed to jump between gain/volume/balance
    */
   private isDuplicateNotification(
-    microphoneSettings: MicrophoneSettingsPayload
+    microphoneSettings: MicrophoneSettingsPayload,
+    receivedAtMs: number
   ): boolean {
-    const nowMs = Date.now();
-    const timeSinceLastPayloadMs =
-      nowMs - this.lastMicrophoneSettingsNotificationMs;
-
-    if (
-      this.previousMicrophoneSettings &&
-      isEqual(this.previousMicrophoneSettings, microphoneSettings) &&
-      timeSinceLastPayloadMs < 100
-    ) {
-      return true;
+    if (!this.previousMicrophoneSettings) {
+      return false;
     }
 
-    this.previousMicrophoneSettings = { ...microphoneSettings };
-    this.lastMicrophoneSettingsNotificationMs = nowMs;
-    return false;
+    const timeSinceLastNotificationMs =
+      receivedAtMs - this.previousMicrophoneSettings.receivedAtMs;
+    return (
+      isEqual(this.previousMicrophoneSettings, microphoneSettings) &&
+      timeSinceLastNotificationMs < 100
+    );
   }
 
   on<N extends keyof Events>(
