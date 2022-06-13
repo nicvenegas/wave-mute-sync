@@ -9,7 +9,6 @@ import WebSocket from "ws";
 import {
   isValidNotificationPayload,
   isValidResponsePayload,
-  MicrophoneSettingsPayload,
   NotificationMethods,
   NotificatonPayload,
   RequestMethods,
@@ -38,11 +37,6 @@ export class WaveLinkWebSocketRPC implements WaveLinkRPC {
       }
     })
   );
-
-  private previousMicrophoneSettingsNotification:
-    | MicrophoneSettingsPayload
-    | undefined;
-  private lastMicrophoneSettingsNotificationMs: number = Date.now();
 
   constructor(private readonly webSocketURL = "ws://127.0.0.1:1824") {}
 
