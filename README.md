@@ -10,15 +10,18 @@ Requirements
 - Elgato [Wave Link](https://www.elgato.com/en/downloads)
 - [Keyboard Maestro](https://www.keyboardmaestro.com/)
   - Import the macros in the `macros` directory
+- [nvm](https://github.com/nvm-sh/nvm)
+- [pnpm](https://pnpm.io/)
 - Zoom (optional)
   - Ensure the _Mute/Unmute My Audio_ keyboard shortcut is set to its default
     (⇧⌘A) and is enabled globally
 
-Install NPM packages
+Install packages
 
 ```bash
-npm install
-npm install -g ts-node
+nvm use
+corepack enable
+pnpm install
 ```
 
 ## Launching
@@ -27,7 +30,7 @@ Ensure the Wave Link application is running and the microphone is connected,
 then run
 
 ```bash
-ts-node src/index.ts
+DEBUG='wave-mute-sync*' pnpm exec ts-node src/index.ts
 ```
 
 Assumes the microphone is unmuted when launched, however, you can override
