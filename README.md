@@ -30,7 +30,7 @@ Ensure the Wave Link application is running and the microphone is connected,
 then run
 
 ```bash
-DEBUG='wave-mute-sync*' pnpm exec ts-node src/index.ts
+pnpm start
 ```
 
 Assumes the microphone is unmuted when launched, however, you can override
