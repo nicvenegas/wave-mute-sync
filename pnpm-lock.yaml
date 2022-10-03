@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/debug': ^4.1.7
-  '@types/node': ^17.0.38
+  '@types/node': ^16.11.7
   '@types/ws': ^8.5.3
   debug: ^4.3.4
   json-rpc-2.0: ^1.1.0
@@ -14,12 +14,12 @@ specifiers:
 dependencies:
   debug: 4.3.4
   json-rpc-2.0: 1.4.1
-  ts-node: 10.9.1_vxrnv5tlr43u5xabofdb6zoswy
+  ts-node: 10.9.1_zeifb3kmegj6f6qchz7i4ry3ta
   ws: 8.8.1
 
 devDependencies:
   '@types/debug': 4.1.7
-  '@types/node': 17.0.45
+  '@types/node': 16.11.64
   '@types/ws': 8.5.3
   prettier: 2.6.2
   typescript: 4.8.2
@@ -75,8 +75,12 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: true
 
+  /@types/node/16.11.64:
+    resolution: {integrity: sha512-z5hPTlVFzNwtJ2LNozTpJcD1Cu44c4LNuzaq1mwxmiHWQh2ULdR6Vjwo1UGldzRpzL0yUEdZddnfqGW2G70z6Q==}
+
   /@types/node/17.0.45:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
+    dev: true
 
   /@types/ws/8.5.3:
     resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==}
@@ -138,7 +142,7 @@ packages:
     hasBin: true
     dev: true
 
-  /ts-node/10.9.1_vxrnv5tlr43u5xabofdb6zoswy:
+  /ts-node/10.9.1_zeifb3kmegj6f6qchz7i4ry3ta:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -157,7 +161,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 17.0.45
+      '@types/node': 16.11.64
       acorn: 8.8.0
       acorn-walk: 8.2.0
       arg: 4.1.3
