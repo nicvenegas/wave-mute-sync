@@ -1,4 +1,5 @@
 import { exec } from "node:child_process";
+import process from "node:process";
 import debug from "debug";
 
 import { MicrophoneStatus } from "./domain";
@@ -6,6 +7,15 @@ import { WaveLinkEmitter } from "./WaveLinkEmitter";
 import { WaveLinkWebSocketRPC } from "./WaveLinkWebSocketRPC";
 
 const log = debug("wave-mute-sync");
+
+process.on("uncaughtException", (e) => {
+  if ((e as NodeJS.ErrnoException).code === "ECONNREFUSED") {
+    log(`Ensure the WaveLink application is running.`);
+    process.exit(1);
+  } else {
+    throw e;
+  }
+});
 
 const micStatus = new WaveLinkEmitter(
   new WaveLinkWebSocketRPC(),
