@@ -11,7 +11,6 @@ Requirements
 - [Keyboard Maestro](https://www.keyboardmaestro.com/)
   - Import the macros in the `macros` directory
 - [nvm](https://github.com/nvm-sh/nvm)
-- [pnpm](https://pnpm.io/)
 - Zoom (optional)
   - Ensure the _Mute/Unmute My Audio_ keyboard shortcut is set to its default
     (⇧⌘A) and is enabled globally
